@@ -25,13 +25,12 @@ apply {
 plugins {
   `java-library`
 }
-version = "develop-SNAPSHOT"
 
 dependencies {
-  compileOnly("org.metaborg:log.slf4j:develop-SNAPSHOT")
-  compileOnly("org.metaborg:pie.runtime:develop-SNAPSHOT")
-  compileOnly("org.metaborg:spoofax.runtime:develop-SNAPSHOT")
-  compileOnly("org.metaborg:spoofax.pie:develop-SNAPSHOT")
+  compileOnly("org.metaborg:log.slf4j:master-SNAPSHOT")
+  compileOnly("org.metaborg:pie.runtime:master-SNAPSHOT")
+  compileOnly("org.metaborg:spoofax.runtime:master-SNAPSHOT")
+  compileOnly("org.metaborg:spoofax.pie:master-SNAPSHOT")
 }
 
 // Use bnd to create a single OSGi bundle that includes all dependencies.
@@ -45,6 +44,6 @@ jar.apply {
   manifest {
     attributes(Pair("Export-Package", exports.joinToString(", ")))
     attributes(Pair("Import-Package", "")) // No imports needed
-    attributes(Pair("Bundle-Version", "0.0.0.develop-qualifier")) // TODO: automate version replacement
+    attributes(Pair("Bundle-Version", "0.0.0.master-qualifier")) // TODO: automate version replacement
   }
 }
