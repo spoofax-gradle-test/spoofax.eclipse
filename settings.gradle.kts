@@ -1,14 +1,11 @@
+rootProject.name = "spoofax.eclipse"
+
 pluginManagement {
-  resolutionStrategy {
-    eachPlugin {
-      if(requested.id.id.startsWith("org.metaborg")) {
-        useModule("org.metaborg:releng.eclipse.gradle:${requested.version}")
-      }
-    }
+  repositories {
+    gradlePluginPortal()
+    maven(url = "http://home.gohla.nl:8091/artifactory/all/")
   }
 }
-
-rootProject.name = "spoofax.eclipse"
 
 include("spoofax.eclipse.plugin")
 include("spoofax.eclipse.meta.plugin")
