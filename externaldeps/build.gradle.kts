@@ -1,3 +1,5 @@
+import mb.coronium.plugin.EmbeddingExtension
+
 // HACK: load our plugin via buildscript classpath and apply to work around IntelliJ bug which prevents custom plugins in composite builds.
 buildscript {
   repositories {
@@ -27,10 +29,10 @@ plugins {
 }
 
 dependencies {
-  compileOnly("org.metaborg:log.slf4j:master-SNAPSHOT")
-  compileOnly("org.metaborg:pie.runtime:master-SNAPSHOT")
-  compileOnly("org.metaborg:spoofax.runtime:master-SNAPSHOT")
-  compileOnly("org.metaborg:spoofax.pie:master-SNAPSHOT")
+  compileOnly("org.metaborg:log.slf4j:develop-SNAPSHOT")
+  compileOnly("org.metaborg:pie.runtime:develop-SNAPSHOT")
+  compileOnly("org.metaborg:spoofax.runtime:develop-SNAPSHOT")
+  compileOnly("org.metaborg:spoofax.pie:develop-SNAPSHOT")
 }
 
 // Use bnd to create a single OSGi bundle that includes all dependencies.
@@ -39,11 +41,12 @@ val exports = listOf(
   "org.slf4j.*;provider=mb;mandatory:=provider",
   "kotlin.*;-split-package:=first;provider=mb;mandatory:=provider"
 )
+val bundleVersion = the<EmbeddingExtension>().bundleVersion // DO NOT INLINE: 'the' is executed in the context of the project.
 val jar: Jar by tasks
 jar.apply {
   manifest {
     attributes(Pair("Export-Package", exports.joinToString(", ")))
     attributes(Pair("Import-Package", "")) // No imports needed
-    attributes(Pair("Bundle-Version", "0.0.0.master-qualifier")) // TODO: automate version replacement
+    attributes(Pair("Bundle-Version", bundleVersion))
   }
 }
