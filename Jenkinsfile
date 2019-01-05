@@ -4,12 +4,8 @@ def publishTaggedOnly
 pipeline {
   agent any
 
-  options {
-    quietPeriod(30)
-  }
-
   triggers {
-    upstream(upstreamProjects: '../log/develop,../pie/develop,../spoofax/develop', threshold: hudson.model.Result.SUCCESS)
+    upstream(upstreamProjects: '../coronium/develop,../log/develop,../pie/develop,../spoofax/develop', threshold: hudson.model.Result.SUCCESS)
   }
 
   environment {
