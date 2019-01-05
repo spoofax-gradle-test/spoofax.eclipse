@@ -4,8 +4,7 @@ import mb.coronium.plugin.BundleExtension
 buildscript {
   repositories {
     flatDir { dirs("../../coronium/build/libs") }
-    mavenCentral()
-    jcenter()
+    maven(url = "http://home.gohla.nl:8091/artifactory/all/")
   }
   dependencies {
     classpath("org.metaborg", "coronium", "develop-SNAPSHOT")
