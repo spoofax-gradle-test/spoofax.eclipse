@@ -1,5 +1,6 @@
 def publish
 def publishTaggedOnly
+def gradleRefreshDependencies
 
 pipeline {
   agent any
@@ -16,16 +17,29 @@ pipeline {
     stage('Prepare') {
       steps {
         script {
-          def props = readProperties defaults: ['publish': 'false', 'publish.tagged.only': 'false'], file: 'jenkins.properties'
+          def defaultProps = [
+            'publish': 'false'
+          , 'publish.tagged.only': 'false'
+          , 'gradle.refresh.dependencies': 'false'
+          ]
+          def props = readProperties defaults: defaultProps, file: 'jenkins.properties'
           publish = props['publish'] == 'true'
           publishTaggedOnly = props['publish.tagged.only'] == 'true'
+          gradleRefreshDependencies = props['gradle.refresh.dependencies'] == 'true'
         }
+      }
+    }
+
+    stage('Refresh dependencies') {
+      when { expression { return gradleRefreshDependencies } }
+      steps {
+        sh 'gradle --refresh-dependencies'
       }
     }
 
     stage('Build') {
      steps {
-        sh 'gradle build --refresh-dependencies'
+        sh 'gradle build'
       }
     }
 
