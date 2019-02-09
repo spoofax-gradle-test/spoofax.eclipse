@@ -1,5 +1,3 @@
-import mb.coronium.plugin.EmbeddingExtension
-
 plugins {
   `java-library`
   id("biz.aQute.bnd.builder") version "4.1.0"
